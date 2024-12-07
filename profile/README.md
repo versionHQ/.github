@@ -1,14 +1,14 @@
-# Overview
+# vwesion HQ
 
 An open-source, multi-agent RAG system that designs, generates, and autopilots messaging workflow.
 
-The workflow is at individual level, and we will deploy it on third-party service destinations using composio.
+The workflow is created at individual level, and we will deploy it on third-party service destinations.
 
 RAG agents are model agnostic.
 
+- [Contribute](https://github.com/versionHQ/multi-agent-system)
 - [Playground (beta)](https://versi0n.io/)
 - [Landing page](https://home.versi0n.io)
-- [Frontend repo](https://github.com/krik8235/pj_m_dev)
 
 
 ## Mindmap
