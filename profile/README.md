@@ -1,4 +1,4 @@
-# vwesion HQ
+# version HQ
 
 An open-source, multi-agent RAG system that designs, generates, and autopilots messaging workflow.
 
