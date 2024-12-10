@@ -6,7 +6,7 @@ The workflow is created at individual level, and we will deploy it on third-part
 
 RAG agents are model agnostic.
 
-- [Contribute](https://github.com/versionHQ/multi-agent-system)
+- [Orchestration (beta/open-source)](https://github.com/versionHQ/multi-agent-system)
 - [Playground (beta)](https://versi0n.io/)
 - [Landing page](https://home.versi0n.io)
 
