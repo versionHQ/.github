@@ -30,7 +30,7 @@ Messaging workflows are created at individual level, and will be deployed on thi
 
 ## Mindmap
 
-LLM-powered `agent` and `team` use `tool` and their own knowledge to complete the `task` given by the client or the system.
+LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill client or system-assigned `tasks`.
 
 <p align="center">
    <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733556715/pj_m_home/urwte15at3h0dr8mdlyo.png" alt="mindmap" width="800">
