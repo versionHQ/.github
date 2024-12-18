@@ -11,6 +11,7 @@ Messaging workflows are created at individual level, and will be deployed on thi
 - [Client interface (beta)](https://versi0n.io/)
 - [Landing page](https://home.versi0n.io)
 
+<hr />
 
 ## Overall Project Structure
 
