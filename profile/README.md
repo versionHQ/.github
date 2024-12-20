@@ -26,7 +26,7 @@ Messaging workflows are created at individual level, and will be deployed on thi
 LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill client or system-assigned `tasks`.
 
 <p align="center">
-   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733556715/pj_m_home/urwte15at3h0dr8mdlyo.png" alt="mindmap" width="800">
+   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733556715/pj_m_home/urwte15at3h0dr8mdlyo.png" alt="mindmap" width="400">
 </p>
 
 
