@@ -21,15 +21,6 @@ Messaging workflows are created at individual level, and will be deployed on thi
 | Website | [home](https://home.versi0n.io) | [client app](https://versi0n.io) | (localhost) | - | - | - |
 
 
-
-## UI
-<p align="center">
-    <img alt="UI" src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733414200/pj_m_home/tqgg3xfpk5x4i6rh3egv.png" width="60%">
-&nbsp;&nbsp;&nbsp;
-   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1728302420/pj_m_home/xy58a7imyquuvkgukqxt.png" width="25%" alt="messaging workflow">
-</p>
-
-
 ## Mindmap
 
 LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill client or system-assigned `tasks`.
@@ -51,3 +42,13 @@ uv pip install git+https://github.com/versionHQ/multi-agent-system.git
 from versionhq.agent.model import Agent
 agent = Agent(llm="your-llm"...)
 ```
+
+<hr />
+
+
+## UI
+<p align="center">
+    <img alt="UI" src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733414200/pj_m_home/tqgg3xfpk5x4i6rh3egv.png" width="60%">
+&nbsp;&nbsp;&nbsp;
+   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1728302420/pj_m_home/xy58a7imyquuvkgukqxt.png" width="25%" alt="messaging workflow">
+</p>
