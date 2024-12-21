@@ -34,7 +34,7 @@ LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill 
 
 1. Open another terminal, set your repository as root, and run
 ```
-uv pip install git+https://github.com/versionHQ/multi-agent-system.git
+pip install versionhq
 ```
 
 2. You can use the `versionhq` module in your Python app.
@@ -42,6 +42,9 @@ uv pip install git+https://github.com/versionHQ/multi-agent-system.git
 from versionhq.agent.model import Agent
 agent = Agent(llm="your-llm"...)
 ```
+
+[pypi package](https://pypi.org/project/versionHQ/)
+
 
 <hr />
 
