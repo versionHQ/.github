@@ -1,6 +1,6 @@
 # version HQ
 
-![Static Badge](https://img.shields.io/badge/License-MIT-green)
+![Static Badge](https://img.shields.io/badge/License-MIT-green) ![Static Badge](https://img.shields.io/badge/pypi-v1.1.6.2-blue)
 
 
 A framework for orchestration and multi-agent system that design, deploy, and autopilot messaging workflows based on performance.
@@ -35,7 +35,7 @@ LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill 
 
 ## Installing `versionhq` Module (Alpha)
 
-![Static Badge](https://img.shields.io/badge/pypi-v1.1.6.2-blue) [PyPi Package](https://pypi.org/project/versionhq/)
+[PyPi Package](https://pypi.org/project/versionhq/)
 
 1. Open another terminal, set your repository as root, and run
 ```
