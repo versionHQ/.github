@@ -1,5 +1,8 @@
 # version HQ
 
+![Static Badge](https://img.shields.io/badge/license-MIT-green)
+
+
 A framework for orchestration and multi-agent system that design, deploy, and autopilot messaging workflows based on performance.
 
 Agents are model agnostic.
@@ -32,6 +35,8 @@ LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill 
 
 ## Installing `versionhq` Module (Alpha)
 
+[PyPi Package](https://pypi.org/project/versionhq/)
+
 1. Open another terminal, set your repository as root, and run
 ```
 pip install versionhq
@@ -42,8 +47,6 @@ pip install versionhq
 from versionhq.agent.model import Agent
 agent = Agent(llm="your-llm"...)
 ```
-
-[pypi package](https://pypi.org/project/versionHQ/)
 
 
 <hr />
