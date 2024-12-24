@@ -11,8 +11,14 @@ Messaging workflows are created at individual level, and will be deployed on thi
 
 **Visit:**
 
+- [PyPi Package](https://pypi.org/project/versionhq/)
 - [Client interface (beta)](https://versi0n.io/)
 - [Landing page](https://home.versi0n.io)
+
+
+```
+pip install versionhq
+```
 
 <hr />
 
@@ -34,8 +40,6 @@ LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill 
 
 
 ## Installing `versionhq` Module (Alpha)
-
-[PyPi Package](https://pypi.org/project/versionhq/)
 
 1. Open another terminal, set your repository as root, and run
 ```
