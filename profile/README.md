@@ -13,7 +13,7 @@ Messaging workflows are created at individual level, and will be deployed on thi
 
 - [PyPi Package](https://pypi.org/project/versionhq/)
 - [Client app (alpha)](https://versi0n.io/)
-- [Client marketing site](https://home.versi0n.io)
+- [Landing page](https://home.versi0n.io)
 
 ```
 pip install versionhq
