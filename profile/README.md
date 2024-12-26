@@ -1,6 +1,6 @@
 # version HQ
 
-![Static Badge](https://img.shields.io/badge/License-MIT-green) ![Static Badge](https://img.shields.io/badge/pypi-v1.1.6.2-blue)
+![MIT license](https://img.shields.io/badge/License-MIT-green) [![Publisher](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml/badge.svg)](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml) ![PyPI](https://img.shields.io/badge/pypi-v1.1.7.2-blue)
 
 
 A framework for orchestration and multi-agent system that design, deploy, and autopilot messaging workflows based on performance.
