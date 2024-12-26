@@ -53,33 +53,43 @@ pip install versionhq
 ```
 
 2. You can use the `versionhq` module in your Python app.
-```
-from versionhq.agent.model import Agent
-from versionhq.task.model import Task, ResponseField
+  - **i.e.,** Make LLM-based agent execute the task and return JSON dict.
 
-agent = Agent(
-   role="demo",
-   goal="amazing project goal",
-   skillsets=["skill_1", "skill_2", ],
-   llm="llm-of-choice"
-)
+   ```
+   from versionhq.agent.model import Agent
+   from versionhq.task.model import Task, ResponseField
 
-task = Task(
-   description="Amazing task",
-   expected_output_json=True,
-   expected_output_pydantic=False,
-   output_field_list=[
-      ResponseField(title="test1", type=str, required=True),
-      ResponseField(title="test2", type=list, required=True),
-   ],
-   context=["amazing context",],
-   callback=None,
-)
+   agent = Agent(
+      role="demo",
+      goal="amazing project goal",
+      skillsets=["skill_1", "skill_2", ],
+      llm="llm-of-choice"
+   )
 
-res = task.execute_sync(agent=agent)
+   task = Task(
+      description="Amazing task",
+      expected_output_json=True,
+      expected_output_pydantic=False,
+      output_field_list=[
+         ResponseField(title="test1", type=str, required=True),
+         ResponseField(title="test2", type=list, required=True),
+      ],
+      context=["amazing context",],
+      tools=["amazing tool"],
+      callback=None,
+   )
 
-return res.to_dict()
-```
+   res = task.execute_sync(agent=agent)
+   return res.to_dict()
+   ```
+
+This will return a dictionary with keys defined in the ResponseField.
+
+   ```
+   { test1: "answer1", "test2": ["answer2-1", "answer2-2", "answer2-3",] }
+   ```
+
+For more info: [PyPI package](https://pypi.org/project/versionhq/)
 
 
 <hr />
