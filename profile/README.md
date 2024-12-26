@@ -45,12 +45,12 @@ LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill 
 </p>
 
 
-## Installing `versionhq` Module (Alpha)
+## Installing `versionhq` Module (alpha)
 
 1. Open another terminal, set your repository as root, and run
-```
-pip install versionhq
-```
+   ```
+   pip install versionhq
+   ```
 
 2. You can use the `versionhq` module in your Python app.
   - **i.e.,** Make LLM-based agent execute the task and return JSON dict.
@@ -63,7 +63,7 @@ pip install versionhq
       role="demo",
       goal="amazing project goal",
       skillsets=["skill_1", "skill_2", ],
-      llm="llm-of-choice"
+      llm="llm-of-your-choice"
    )
 
    task = Task(
@@ -74,11 +74,9 @@ pip install versionhq
          ResponseField(title="test1", type=str, required=True),
          ResponseField(title="test2", type=list, required=True),
       ],
-      context=["amazing context",],
       callback=None,
    )
-
-   res = task.execute_sync(agent=agent)
+   res = task.execute_sync(agent=agent, context="amazing context to consider.")
    return res.to_dict()
    ```
 
