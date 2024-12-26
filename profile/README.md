@@ -55,7 +55,30 @@ pip install versionhq
 2. You can use the `versionhq` module in your Python app.
 ```
 from versionhq.agent.model import Agent
-agent = Agent(llm="your-llm"...)
+from versionhq.task.model import Task, ResponseField
+
+agent = Agent(
+   role="demo",
+   goal="amazing project goal",
+   skillsets=["skill_1", "skill_2", ],
+   llm="llm-of-choice"
+)
+
+task = Task(
+   description="Amazing task",
+   expected_output_json=True,
+   expected_output_pydantic=False,
+   output_field_list=[
+      ResponseField(title="test1", type=str, required=True),
+      ResponseField(title="test2", type=list, required=True),
+   ],
+   context=["amazing context",],
+   callback=None,
+)
+
+res = task.execute_sync(agent=agent)
+
+return res.to_dict()
 ```
 
 
