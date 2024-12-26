@@ -75,7 +75,6 @@ pip install versionhq
          ResponseField(title="test2", type=list, required=True),
       ],
       context=["amazing context",],
-      tools=["amazing tool"],
       callback=None,
    )
 
