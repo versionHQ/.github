@@ -26,10 +26,11 @@ Messaging workflows are created at individual level, and will be deployed on thi
 
 ## Overall Project Structure
 
-|  | Marketing Page | Client App (Beta) | Test app | LLM Orchestration Framework | Core | Analyics |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Github |  [repo_1](https://github.com/krik8235/pj_m_dev_home) | [repo_a](https://github.com/krik8235/pj_m_dev) | [repo_b](https://github.com/versionHQ/test-client-app) | [repo_c](https://github.com/versionHQ/multi-agent-system)  | [repo_d](https://github.com/krik8235/core)| [repo_e](https://github.com/versionHQ/clutering-analysis) |
-| Website | [home](https://home.versi0n.io) | [client app](https://versi0n.io) | (localhost) | - | - | - |
+| | LLM Orchestration Framework | Core | Analyics | Use Case | Test app |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Github | [repo_a](https://github.com/versionHQ/multi-agent-system) | [repo_b](https://github.com/krik8235/core) | [repo_c](https://github.com/versionHQ/clutering-analysis) | [repo_d](https://github.com/krik8235/pj_m_dev) | [repo_e](https://github.com/versionHQ/test-client-app) | 
+| Website | [PyPI](https://pypi.org/project/versionhq/) | - | - | [client app](https://versi0n.io) | - |
+
 
 
 ## Mindmap
