@@ -19,7 +19,7 @@ Messaging workflows are created at individual level, and will be deployed on thi
 - [PyPI](https://pypi.org/project/versionhq/)
 - [Github (LLM orchestration framework)](https://github.com/versionHQ/multi-agent-system)
 - [Github (Test client app)](https://github.com/versionHQ/test-client-app)
-- [Use case](https://versi0n.io/) - client app (alpha)
+- [Use case](https://versi0n.io/playground)
 
 
 <hr />
