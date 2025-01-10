@@ -68,13 +68,10 @@ LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill 
 
    task = Task(
       description="Amazing task",
-      expected_output_json=True,
-      expected_output_pydantic=False,
       output_field_list=[
          ResponseField(title="test1", type=str, required=True),
          ResponseField(title="test2", type=list, required=True),
       ],
-      callback=None,
    )
    res = task.execute_sync(agent=agent, context="amazing context to consider.")
    return res.to_dict()
