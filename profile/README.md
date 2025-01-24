@@ -2,85 +2,82 @@
 
 ![MIT license](https://img.shields.io/badge/License-MIT-green) 
 [![Publisher](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml/badge.svg)](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml) 
-![PyPI](https://img.shields.io/badge/PyPI-v1.1.7.9-blue)
+![PyPI](https://img.shields.io/badge/PyPI->=v1.1.10-blue)
 ![python ver](https://img.shields.io/badge/Python-3.12/3.13-purple) 
 ![pyenv ver](https://img.shields.io/badge/pyenv-2.4.23-orange)
 ![node](https://img.shields.io/badge/node-22.0-darkblue)
 
 
-A framework for orchestration and multi-agent system that design, deploy, and autopilot messaging workflows based on performance.
-
-Agents are model agnostic.
-
-Messaging workflows are created at individual level, and will be deployed on third-party services via `Composio`.
+LLM orchestration frameworks to deploy multi-agent systems focusing on complex outbound tasks.
 
 **Visit:**
 
 - [PyPI](https://pypi.org/project/versionhq/)
 - [Github (LLM orchestration framework)](https://github.com/versionHQ/multi-agent-system)
 - [Github (Test client app)](https://github.com/versionHQ/test-client-app)
-- [Use case](https://versi0n.io/playground)
-
+- [Use case](https://versi0n.io/playground) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737728699/pj_m_home/k8mprugoyhlo9cuygyf8.mov)
 
 <hr />
 
-## Overall Project Structure
-
-| | LLM Orchestration Framework | Core | Analyics | Use Case | Test app |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| Github | [repo_a](https://github.com/versionHQ/multi-agent-system) | [repo_b](https://github.com/krik8235/core) | [repo_c](https://github.com/versionHQ/clutering-analysis) | [repo_d](https://github.com/krik8235/pj_m_dev) | [repo_e](https://github.com/versionHQ/test-client-app) | 
-| Website | [PyPI](https://pypi.org/project/versionhq/) | - | - | [client app](https://versi0n.io) | - |
-
-
-
 ## Mindmap
-
-LLM-powered `agents` and `teams` utilize `tools` and their expertise to fulfill client or system-assigned `tasks`.
+Model-agnostic agents will collaborate to execute complex tasks, levaraging retrieval augmented generation (RAG) tools, shared knowledge bases, and adaptive learning.
 
 <p align="center">
-   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733556715/pj_m_home/urwte15at3h0dr8mdlyo.png" alt="mindmap" width="400">
+   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733556715/pj_m_home/urwte15at3h0dr8mdlyo.png" alt="mindmap" width="300">
 </p>
 
+<hr />
 
-## Usage
+## Quick Start
 
-1. Install `versionhq` package:
-   ```
-   uv pip install versionhq
-   ```
-
-2. You can use the `versionhq` module in your Python app.
-
-
-### Case 1. Build an AI agent on LLM of your choice and execute a task:
+**Install `versionhq` package:**
 
    ```
+   pip install versionhq
+   ```
+
+(Python >= 3.13)
+
+
+### Case 1. Single agent network:
+
+#### Return a structured output with a summary in string.
+
+   ```
+   from pydantic import BaseModel
    from versionhq.agent.model import Agent
-   from versionhq.task.model import Task, ResponseField
+   from versionhq.task.model import Task
 
-   agent = Agent(
-      role="demo",
-      goal="amazing project goal",
-      skillsets=["skill_1", "skill_2", ],
-      tools=["amazing RAG tool",]
-      llm="llm-of-your-choice"
-   )
+   class CustomOutput(BaseModel):
+      test1: str
+      test2: list[str]
+
+   def dummy_func(message: str, test1: str, test2: list[str]) -> str:
+      return f"{message}: {test1}, {", ".join(test2)}"
+
+
+   agent = Agent(role="demo", goal="amazing project goal")
 
    task = Task(
       description="Amazing task",
-      output_field_list=[
-         ResponseField(title="test1", type=str, required=True),
-         ResponseField(title="test2", type=list, required=True),
-      ],
+      pydantic_custom_output=CustomOutput,
+      callback=dummy_func,
+      callback_kwargs=dict(message="Hi! Here is the result: ")
    )
+
    res = task.execute_sync(agent=agent, context="amazing context to consider.")
-   return res.to_dict()
+   print(res)
    ```
 
-This will return a dictionary with keys defined in the `ResponseField`.
+This will return `TaskOutput` that stores a response in string, JSON dict, and Pydantic model: `CustomOutput` formats with a callback result.
 
    ```
-   { test1: "answer1", "test2": ["answer2-1", "answer2-2", "answer2-3",] }
+   res == TaskOutput(
+      raw="{\\"test1\\": \\"random str\\", \\"test2\\": [\\"item1\\", \\"item2\\"]}",
+      json_dict={"test1": "random str", "test2": ["item1", "item2"]},
+      pydantic=CustomOutput(test1="random str", test2=["item 1", "item 2"]),
+      callback_output="Hi! Here is the result: random str, item 1, item 2",
+   )
    ```
 
 ### Case 2. Form a team to handle multiple tasks:
@@ -118,13 +115,27 @@ This will return a list with dictionaries with keys defined in the `ResponseFiel
 
 Tasks can be delegated to a team manager, peers in the team, or completely new agent.
 
+<hr />
+
+## UI
+
+<p align="center">
+   <img
+    src="https://res.cloudinary.com/dfeirxlea/image/upload/v1734942341/pj_m_home/yk9pm42xn0ibdrtpmb0d.png"
+    alt="version UI dark mode"
+   />
+   <img
+    src="https://res.cloudinary.com/dfeirxlea/image/upload/v1734943272/pj_m_home/dhubpqhj4qjyqwldkgwk.png"
+    alt="pypi package"
+   />
+</p>
 
 <hr />
 
+## Project Structure
 
-## UI
-<p align="center">
-    <img alt="UI" src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733414200/pj_m_home/tqgg3xfpk5x4i6rh3egv.png" width="60%">
-&nbsp;&nbsp;&nbsp;
-   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1728302420/pj_m_home/xy58a7imyquuvkgukqxt.png" width="25%" alt="messaging workflow">
-</p>
+| | LLM Orchestration Framework | Core | Analyics | Use Case | Test app |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Github | [repo_a](https://github.com/versionHQ/multi-agent-system) | [repo_b](https://github.com/krik8235/core) | [repo_c](https://github.com/versionHQ/clutering-analysis) | [repo_d](https://github.com/krik8235/pj_m_dev) | [repo_e](https://github.com/versionHQ/test-client-app) | 
+| Website | [PyPI](https://pypi.org/project/versionhq/) | - | - | [client app](https://versi0n.io) | - |
+
