@@ -15,7 +15,7 @@ LLM orchestration frameworks to deploy multi-agent systems focusing on complex o
 - [PyPI](https://pypi.org/project/versionhq/)
 - [Github (LLM orchestration framework)](https://github.com/versionHQ/multi-agent-system)
 - [Github (Test client app)](https://github.com/versionHQ/test-client-app)
-- [Use case](https://versi0n.io/playground) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737728699/pj_m_home/k8mprugoyhlo9cuygyf8.mov)
+- [Use case](https://versi0n.io/playground) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737732977/pj_m_home/pnsyh5mfvmilwgt0eusa.mov)
 
 <hr />
 
