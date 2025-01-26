@@ -93,7 +93,7 @@ This will return `TaskOutput` that stores a response in string, JSON dict, and P
    )
    ```
 
-### Case 2. Form a team to handle multiple tasks:
+### Case 2. Supervising:
 
    ```
    from versionhq.agent.model import Agent
