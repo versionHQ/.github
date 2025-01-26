@@ -16,15 +16,28 @@ LLM orchestration frameworks to deploy multi-agent systems focusing on complex o
 - [Github (LLM orchestration framework)](https://github.com/versionHQ/multi-agent-system)
 - [Github (Test client app)](https://github.com/versionHQ/test-client-app)
 - [Use case](https://versi0n.io/playground) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737732977/pj_m_home/pnsyh5mfvmilwgt0eusa.mov)
+- [Documentation](https://chief-oxygen-8a2.notion.site/Documentation-17e923685cf98001a5fad5c4b2acd79b?pvs=4) *Some components are under review.
 
 <hr />
 
-## Mindmap
-Model-agnostic agents will collaborate to execute complex tasks, levaraging retrieval augmented generation (RAG) tools, shared knowledge bases, and adaptive learning.
+## Key Features
 
-<p align="center">
-   <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1733556715/pj_m_home/urwte15at3h0dr8mdlyo.png" alt="mindmap" width="300">
-</p>
+Generate mulit-agent systems depending on the complexity of the task, and execute the task with agents of choice.
+
+Model-agnostic agents can handle RAG tools, tools, callbacks, and knowledge sharing among other agents.
+
+
+###  Agent formation
+Depending on the task complexity, agents can make a different formation.
+
+You can specify which formation you want them to generate, or let the agent decide if you don’t have a clear plan.
+
+
+|  | **Solo Agent** | **Supervising** | **Network** | **Random** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Formation** | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1737893140/pj_m_agents/tglrxoiuv7kk7nzvpe1z.jpg" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1737893141/pj_m_agents/hxngdvnn5b5qdxo0ayl5.jpg" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1737893142/pj_m_agents/kyc6neg8m6keyizszcpi.jpg" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1737893139/pj_m_agents/hzpchlcpnpwxwaapu1hr.jpg" alt="solo" width="200"> |
+| **Usage** | <ul><li>A single agent with tools, knowledge, and memory.</li><li>When self-learning mode is on - it will turn into **Random** formation.</li></ul> | <ul><li>Leader agent gives directions, while sharing its knowledge and memory.</li><li>Subordinates can be solo agents or networks.</li></ul> | <ul><li>Share tasks, knowledge, and memory among network members.</li></ul> | <ul><li>A single agent handles tasks, asking help from other agents without sharing its memory or knowledge.</li></ul> |
+| **Use case** | An email agent drafts promo message for the given audience. | The leader agent strategizes an outbound campaign plan and assigns components such as media mix or message creation to subordinate agents. | An email agent and social media agent share the product knowledge and deploy multi-channel outbound campaign. | 1. An email agent drafts promo message for the given audience, asking insights on tones from other email agents which oversee other clusters. 2. An agent calls the external agent to deploy the campaign. |
 
 <hr />
 
@@ -39,7 +52,7 @@ Model-agnostic agents will collaborate to execute complex tasks, levaraging retr
 (Python >= 3.13)
 
 
-### Case 1. Single agent network:
+### Case 1. Solo agent:
 
 #### Return a structured output with a summary in string.
 
@@ -92,13 +105,13 @@ This will return `TaskOutput` that stores a response in string, JSON dict, and P
 
    task_1 = Task(
       description="Analyze the client's business model.",
-      output_field_list=[ResponseField(title="test1", type=str, required=True),],
+      response_fields=[ResponseField(title="test1", data_type=str, required=True),],
       allow_delegation=True
    )
 
     task_2 = Task(
       description="Define the cohort.",
-      output_field_list=[ResponseField(title="test1", type=int, required=True),],
+      response_fields=[ResponseField(title="test1", data_type=int, required=True),],
       allow_delegation=False
    )
 
