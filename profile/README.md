@@ -7,7 +7,7 @@
 ![node](https://img.shields.io/badge/node-22.0-darkblue)
 
 
-LLM orchestration frameworks to deploy multi-agent systems focusing on complex outbound tasks.
+LLM orchestration frameworks to deploy multi-agent systems and automate complex tasks with agents.
 
 **Visit:**
 
