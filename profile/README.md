@@ -2,8 +2,8 @@
 
 ![MIT license](https://img.shields.io/badge/License-MIT-green) 
 [![Publisher](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml/badge.svg)](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml) 
-![PyPI](https://img.shields.io/badge/PyPI->=v1.1.10-blue)
-![python ver](https://img.shields.io/badge/Python-3.12/3.13-purple) 
+![PyPI](https://img.shields.io/badge/PyPI->=v1.1.11-blue)
+![python ver](https://img.shields.io/badge/Python->=3.11-purple) 
 ![pyenv ver](https://img.shields.io/badge/pyenv-2.4.23-orange)
 ![node](https://img.shields.io/badge/node-22.0-darkblue)
 
@@ -28,9 +28,10 @@ Model-agnostic agents can handle RAG tools, tools, callbacks, and knowledge shar
 
 
 ###  Agent formation
-Depending on the task complexity, agents can make a different formation.
 
-You can specify which formation you want them to generate, or let the agent decide if you don’t have a clear plan.
+Agents adapt their formation based on task complexity. 
+
+You can specify a desired formation or allow the agents to determine it autonomously (default).
 
 
 |  | **Solo Agent** | **Supervising** | **Network** | **Random** |
@@ -49,7 +50,7 @@ You can specify which formation you want them to generate, or let the agent deci
    pip install versionhq
    ```
 
-(Python >= 3.13)
+(Python 3.11 or higher)
 
 
 ### Case 1. Solo agent:
@@ -86,10 +87,13 @@ This will return `TaskOutput` that stores a response in string, JSON dict, and P
 
    ```
    res == TaskOutput(
-      raw="{\\"test1\\": \\"random str\\", \\"test2\\": [\\"item1\\", \\"item2\\"]}",
-      json_dict={"test1": "random str", "test2": ["item1", "item2"]},
-      pydantic=CustomOutput(test1="random str", test2=["item 1", "item 2"]),
-      callback_output="Hi! Here is the result: random str, item 1, item 2",
+      task_id=UUID('<TASK UUID>')
+      raw='{\"test1\":\"random str\", \"test2\":[\"str item 1\", \"str item 2\", \"str item 3\"]}',
+      json_dict={'test1': 'random str', 'test2': ['str item 1', 'str item 2', 'str item 3']},
+      pydantic=<class '__main__.CustomOutput'>
+      tool_output=None,
+      callback_output='Hi! Here is the result: random str, str item 1, str item 2, str item 3',
+      evaluation=None
    )
    ```
 
@@ -147,8 +151,8 @@ Tasks can be delegated to a team manager, peers in the team, or completely new a
 
 ## Project Structure
 
-| | LLM Orchestration Framework | Core | Analyics | Use Case | Test app |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| Github | [repo_a](https://github.com/versionHQ/multi-agent-system) | [repo_b](https://github.com/krik8235/core) | [repo_c](https://github.com/versionHQ/clutering-analysis) | [repo_d](https://github.com/krik8235/pj_m_dev) | [repo_e](https://github.com/versionHQ/test-client-app) | 
-| Website | [PyPI](https://pypi.org/project/versionhq/) | - | - | [client app](https://versi0n.io) | - |
+| | LLM Orchestration Framework | Core | Analyics | Use Case |
+| :---: | :---: | :---: | :---: | :---: | 
+| Github | [repo_a](https://github.com/versionHQ/multi-agent-system) | [repo_b](https://github.com/krik8235/core) | [repo_c](https://github.com/versionHQ/clutering-analysis) | [repo_d](https://github.com/krik8235/pj_m_dev) |
+| Website | [PyPI](https://pypi.org/project/versionhq/) | - | - | [client app](https://versi0n.io) |
 
