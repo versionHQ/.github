@@ -2,33 +2,33 @@
 
 ![MIT license](https://img.shields.io/badge/License-MIT-green)
 [![Publisher](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml/badge.svg)](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml)
-![PyPI](https://img.shields.io/badge/PyPI-v1.1.11-blue)
-![python ver](https://img.shields.io/badge/Python-3.11/3.12/3.13-purple)
+![PyPI](https://img.shields.io/badge/PyPI-v1.1.12+-blue)
+![python ver](https://img.shields.io/badge/Python-3.11+-purple)
+![pyenv ver](https://img.shields.io/badge/pyenv-2.5.0-orange)
 ![node](https://img.shields.io/badge/node-22.0-darkblue)
 
 
-LLM orchestration frameworks to deploy multi-agent systems and automate complex tasks with agents.
+Agentic orchestration framework to deploy agent network and handle complex task automation.
 
 **Visit:**
 
 - [PyPI](https://pypi.org/project/versionhq/)
 - [Github (LLM orchestration framework)](https://github.com/versionHQ/multi-agent-system)
-- [Github (Test client app)](https://github.com/versionHQ/test-client-app)
-- [Use case](https://versi0n.io/playground) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737732977/pj_m_home/pnsyh5mfvmilwgt0eusa.mov)
-- [Documentation](https://chief-oxygen-8a2.notion.site/Documentation-17e923685cf98001a5fad5c4b2acd79b?pvs=4) *Some components are under review.
+- [Use case](https://versi0n.io/) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737732977/pj_m_home/pnsyh5mfvmilwgt0eusa.mov)
+- [Documentation](https://docs.versi0n.io)
 
 <hr />
 
 ## Key Features
 
-Generate mulit-agent systems depending on the complexity of the task, and execute the task with agents of choice.
+`versionhq` is a Python framework that can generate agent networks for complex task automation without human interaction.
 
-Model-agnostic agents can handle RAG tools, tools, callbacks, and knowledge sharing among other agents.
+Agents are model-agnostic, and will improve task output, while oprimizing token cost and job latency, by sharing their memory, knowledge base, and RAG tools with other agents in the network.
 
 
 ###  Agent formation
 
-Agents adapt their formation based on task complexity. 
+Agents adapt their formation based on task complexity.
 
 You can specify a desired formation or allow the agents to determine it autonomously (default).
 
@@ -51,15 +51,28 @@ You can specify a desired formation or allow the agents to determine it autonomo
 
 (Python 3.11 or higher)
 
+### Generate agent networks and launch task execution:
 
-### Case 1. Solo agent:
+   ```
+   from versionhq import form_agent_network
+
+   network = form_agent_network(
+      task="YOUR AMAZING TASK OVERVIEW",
+      expected_outcome="YOUR OUTCOME EXPECTATION",
+   )
+   res = network.launch()
+   ```
+
+   This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, Pydantic model format with evaluation.
+
+
+### Solo Agent:
 
 #### Return a structured output with a summary in string.
 
    ```
    from pydantic import BaseModel
-   from versionhq.agent.model import Agent
-   from versionhq.task.model import Task
+   from versionhq import Agent, Task
 
    class CustomOutput(BaseModel):
       test1: str
@@ -73,7 +86,7 @@ You can specify a desired formation or allow the agents to determine it autonomo
 
    task = Task(
       description="Amazing task",
-      pydantic_custom_output=CustomOutput,
+      pydantic_output=CustomOutput,
       callback=dummy_func,
       callback_kwargs=dict(message="Hi! Here is the result: ")
    )
@@ -82,7 +95,7 @@ You can specify a desired formation or allow the agents to determine it autonomo
    print(res)
    ```
 
-This will return `TaskOutput` that stores a response in string, JSON dict, and Pydantic model: `CustomOutput` formats with a callback result.
+This will return `TaskOutput` instance that stores a response in plane text, JSON serializable dict, and Pydantic model: `CustomOutput` formats with a callback result, tool output (if given), and evaluation results (if given).
 
    ```
    res == TaskOutput(
@@ -96,12 +109,10 @@ This will return `TaskOutput` that stores a response in string, JSON dict, and P
    )
    ```
 
-### Case 2. Supervising:
+### Supervising:
 
    ```
-   from versionhq.agent.model import Agent
-   from versionhq.task.model import Task, ResponseField
-   from versionhq.team.model import Team, TeamMember
+   from versionhq import Agent, Task, ResponseField, Team, TeamMember
 
    agent_a = Agent(role="agent a", goal="My amazing goals", llm="llm-of-your-choice")
    agent_b = Agent(role="agent b", goal="My amazing goals", llm="llm-of-your-choice")
@@ -130,6 +141,8 @@ This will return `TaskOutput` that stores a response in string, JSON dict, and P
 This will return a list with dictionaries with keys defined in the `ResponseField` of each task.
 
 Tasks can be delegated to a team manager, peers in the team, or completely new agent.
+
+
 
 <hr />
 
