@@ -12,10 +12,11 @@ Agentic orchestration framework to deploy agent network and handle complex task 
 
 **Visit:**
 
+- [Docs](https://docs.versi0n.io)
+- [Github (Agentic orchestration framework)](https://github.com/versionHQ/multi-agent-system)
 - [PyPI](https://pypi.org/project/versionhq/)
-- [Github (LLM orchestration framework)](https://github.com/versionHQ/multi-agent-system)
-- [Use case](https://versi0n.io/) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737732977/pj_m_home/pnsyh5mfvmilwgt0eusa.mov)
-- [Documentation](https://docs.versi0n.io)
+- [Playground](https://versi0n.io/) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737732977/pj_m_home/pnsyh5mfvmilwgt0eusa.mov)
+
 
 <hr />
 
