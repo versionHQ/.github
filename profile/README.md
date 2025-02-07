@@ -13,10 +13,10 @@ Agentic orchestration framework to deploy agent network and handle complex task 
 
 **Visit:**
 
+- [Github](https://github.com/versionHQ/multi-agent-system)
 - [Docs](https://docs.versi0n.io)
-- [Github (Agentic orchestration framework)](https://github.com/versionHQ/multi-agent-system)
 - [PyPI](https://pypi.org/project/versionhq/)
-- [Playground](https://versi0n.io/) / [Quick demo](https://res.cloudinary.com/dfeirxlea/video/upload/v1737732977/pj_m_home/pnsyh5mfvmilwgt0eusa.mov)
+- [Playground](https://versi0n.io/)
 
 
 <hr />
@@ -53,9 +53,9 @@ You can specify a desired formation or allow the agents to determine it autonomo
 
 (Python 3.11 or higher)
 
-### Generate agent networks and launch task execution:
+### Generate agent networks and execute tasks:
 
-   ```
+   ```python
    from versionhq import form_agent_network
 
    network = form_agent_network(
@@ -65,14 +65,16 @@ You can specify a desired formation or allow the agents to determine it autonomo
    res = network.launch()
    ```
 
-   This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, Pydantic model format with evaluation.
+   This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, and Pydantic model format with evaluation.
 
 
 ### Solo Agent:
 
-#### Return a structured output with a summary in string.
+If you don't need a network, you can simply build an agent using `Agent` model.
 
-   ```
+By default, the agent prioritizes JSON serializable outputs over plane text.
+
+   ```python
    from pydantic import BaseModel
    from versionhq import Agent, Task
 
@@ -97,23 +99,24 @@ You can specify a desired formation or allow the agents to determine it autonomo
    print(res)
    ```
 
-This will return `TaskOutput` instance that stores a response in plane text, JSON serializable dict, and Pydantic model: `CustomOutput` formats with a callback result, tool output (if given), and evaluation results (if given).
 
-   ```
+This will return a `TaskOutput` object that stores response in plane text, JSON, and Pydantic model: `CustomOutput` formats with a callback result, tool output (if given), and evaluation results (if given).
+
+   ```python
    res == TaskOutput(
-      task_id=UUID('<TASK UUID>')
+      task_id=UUID('<TASK UUID>'),
       raw='{\"test1\":\"random str\", \"test2\":[\"str item 1\", \"str item 2\", \"str item 3\"]}',
       json_dict={'test1': 'random str', 'test2': ['str item 1', 'str item 2', 'str item 3']},
-      pydantic=<class '__main__.CustomOutput'>
+      pydantic=<class '__main__.CustomOutput'>,
       tool_output=None,
-      callback_output='Hi! Here is the result: random str, str item 1, str item 2, str item 3',
+      callback_output='Hi! Here is the result: random str, str item 1, str item 2, str item 3', # returned a plain text summary
       evaluation=None
    )
    ```
 
 ### Supervising:
 
-   ```
+   ```python
    from versionhq import Agent, Task, ResponseField, Team, TeamMember
 
    agent_a = Agent(role="agent a", goal="My amazing goals", llm="llm-of-your-choice")
@@ -137,14 +140,12 @@ This will return `TaskOutput` instance that stores a response in plane text, JSO
          TeamMember(agent=agent_b, is_manager=True, task=task_2),
       ],
    )
-   res = team.kickoff()
+   res = team.launch()
    ```
 
 This will return a list with dictionaries with keys defined in the `ResponseField` of each task.
 
 Tasks can be delegated to a team manager, peers in the team, or completely new agent.
-
-
 
 <hr />
 
