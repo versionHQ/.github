@@ -45,50 +45,51 @@ You can specify a desired formation or allow the agents to determine it autonomo
 
 ## Quick Start
 
-**Install `versionhq` package:**
+### Package installation
 
    ```
    pip install versionhq
    ```
 
-(Python 3.11 or higher)
+(Python 3.11 / 3.12)
 
-### Generate agent networks and execute tasks:
+### Forming a agent network
 
    ```python
-   from versionhq import form_agent_network
+   import versionhq as vhq
 
-   network = form_agent_network(
+   network = vhq.form_agent_network(
       task="YOUR AMAZING TASK OVERVIEW",
       expected_outcome="YOUR OUTCOME EXPECTATION",
    )
    res = network.launch()
    ```
 
-   This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, and Pydantic model format with evaluation.
+   This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, Pydantic model format with evaluation.
 
 
-### Solo Agent:
+### Customizing AI agents
 
-If you don't need a network, you can simply build an agent using `Agent` model.
+You can simply build an agent using `Agent` model.
 
-By default, the agent prioritizes JSON serializable outputs over plane text.
+By default, the agent prioritize JSON serializable outputs over plane texts.
+
 
    ```python
+   import versionhq as vhq
    from pydantic import BaseModel
-   from versionhq import Agent, Task
 
    class CustomOutput(BaseModel):
       test1: str
       test2: list[str]
 
    def dummy_func(message: str, test1: str, test2: list[str]) -> str:
-      return f"{message}: {test1}, {", ".join(test2)}"
+      return f"""{message}: {test1}, {", ".join(test2)}"""
 
 
-   agent = Agent(role="demo", goal="amazing project goal")
+   agent = vhq.Agent(role="demo", goal="amazing project goal")
 
-   task = Task(
+   task = vhq.Task(
       description="Amazing task",
       pydantic_output=CustomOutput,
       callback=dummy_func,
@@ -114,30 +115,30 @@ This will return a `TaskOutput` object that stores response in plane text, JSON,
    )
    ```
 
-### Supervising:
+### Supervising
 
    ```python
-   from versionhq import Agent, Task, ResponseField, Team, TeamMember
+   import versionhq as vhq
 
-   agent_a = Agent(role="agent a", goal="My amazing goals", llm="llm-of-your-choice")
-   agent_b = Agent(role="agent b", goal="My amazing goals", llm="llm-of-your-choice")
+   agent_a = vhq.Agent(role="agent a", goal="My amazing goals", llm="llm-of-your-choice")
+   agent_b = vhq.Agent(role="agent b", goal="My amazing goals", llm="llm-of-your-choice")
 
-   task_1 = Task(
+   task_1 = vhq.Task(
       description="Analyze the client's business model.",
-      response_fields=[ResponseField(title="test1", data_type=str, required=True),],
+      response_fields=[vhq.ResponseField(title="test1", data_type=str, required=True),],
       allow_delegation=True
    )
 
-    task_2 = Task(
+    task_2 = vhq.Task(
       description="Define the cohort.",
       response_fields=[ResponseField(title="test1", data_type=int, required=True),],
       allow_delegation=False
    )
 
-   team = Team(
+   team = vhq.Team(
       members=[
-         TeamMember(agent=agent_a, is_manager=False, task=task_1),
-         TeamMember(agent=agent_b, is_manager=True, task=task_2),
+         vhq.Member(agent=agent_a, is_manager=False, task=task_1),
+         vhq.Member(agent=agent_b, is_manager=True, task=task_2),
       ],
    )
    res = team.launch()
@@ -149,22 +150,8 @@ Tasks can be delegated to a team manager, peers in the team, or completely new a
 
 <hr />
 
-## UI
 
-<p align="center">
-   <img
-    src="https://res.cloudinary.com/dfeirxlea/image/upload/v1734942341/pj_m_home/yk9pm42xn0ibdrtpmb0d.png"
-    alt="version UI dark mode"
-   />
-   <img
-    src="https://res.cloudinary.com/dfeirxlea/image/upload/v1734943272/pj_m_home/dhubpqhj4qjyqwldkgwk.png"
-    alt="pypi package"
-   />
-</p>
-
-<hr />
-
-## Project Structure
+## Repository Structure
 
 | | LLM Orchestration Framework | Core | Analyics | Use Case |
 | :---: | :---: | :---: | :---: | :---: | 
