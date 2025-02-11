@@ -40,6 +40,72 @@ You can specify a desired formation or allow the agents to determine it autonomo
 | **Usage** | <ul><li>A single agent with tools, knowledge, and memory.</li><li>When self-learning mode is on - it will turn into **Random** formation.</li></ul> | <ul><li>Leader agent gives directions, while sharing its knowledge and memory.</li><li>Subordinates can be solo agents or networks.</li></ul> | <ul><li>Share tasks, knowledge, and memory among network members.</li></ul> | <ul><li>A single agent handles tasks, asking help from other agents without sharing its memory or knowledge.</li></ul> |
 | **Use case** | An email agent drafts promo message for the given audience. | The leader agent strategizes an outbound campaign plan and assigns components such as media mix or message creation to subordinate agents. | An email agent and social media agent share the product knowledge and deploy multi-channel outbound campaign. | 1. An email agent drafts promo message for the given audience, asking insights on tones from other email agents which oversee other clusters. 2. An agent calls the external agent to deploy the campaign. |
 
+<hr />
+
+### Graph Theory Concept
+
+To completely automate task workflows, agents will build a `task-oriented network` by generating `nodes` that represent tasks and connecting them with dependency-defining `edges`.
+
+Each node is triggered by specific events and executed by an assigned agent once all dependencies are met.
+
+While the network automatically reconfigures itself, you retain the ability to direct the agents using `should_reform` variable.
+
+
+The following code snippet demonstrates the `TaskGraph` and its visualization, saving the diagram to the `uploads` directory.
+
+```python
+import versionhq as vhq
+
+task_graph = vhq.TaskGraph(directed=False, should_reform=True) # triggering auto formation
+
+task_a = vhq.Task(description="Research Topic")
+task_b = vhq.Task(description="Outline Post")
+task_c = vhq.Task(description="Write First Draft")
+
+node_a = task_graph.add_task(task=task_a)
+node_b = task_graph.add_task(task=task_b)
+node_c = task_graph.add_task(task=task_c)
+
+task_graph.add_dependency(
+   node_a.identifier, node_b.identifier,
+   type=vhq.DependencyType.FINISH_TO_START, weight=5, description="B depends on A"
+)
+task_graph.add_dependency(
+   node_a.identifier, node_c.identifier,
+   type=vhq.DependencyType.FINISH_TO_FINISH, lag=1, required=False, weight=3
+)
+
+task_graph.visualize()
+```
+
+<hr />
+
+### Agent optimization
+
+Agents are model-agnostic and can handle multiple tasks, leveraging their own and their peers' knowledge sources, memories, and tools.
+
+Agents are optimized during network formation, but customization is possible before or after.
+
+The following code snippet demonstrates agent customization:
+
+```python
+import versionhq as vhq
+
+agent = vhq.Agent(
+   role="Marketing Analyst",
+   goal="my amazing goal"
+) # assuming this agent was created during the network formation
+
+# update the agent
+agent.update(
+   llm="gemini-2.0", # updating LLM (Valid llm_config will be inherited to the new LLM.)
+   tools=[vhq.Tool(func=lambda x: x)], # adding tools
+   max_rpm=3,
+   knowledge_sources=["<KC1>", "<KS2>"], # adding knowledge sources. This will trigger the storage creation.
+   memory_config={"user_id": "0001"}, # adding memories
+   dummy="I am dummy" # <- invalid field will be automatically ignored
+)
+```
 
 <hr />
 
@@ -68,11 +134,11 @@ You can specify a desired formation or allow the agents to determine it autonomo
    This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, Pydantic model format with evaluation.
 
 
-### Customizing AI agents
+### Executing tasks
 
-You can simply build an agent using `Agent` model.
+You can simply build an agent using `Agent` model and execute the task using `Task` class.
 
-By default, the agent prioritize JSON serializable outputs over plane texts.
+By default, agents prioritize JSON over plane text outputs.
 
 
    ```python
@@ -86,9 +152,6 @@ By default, the agent prioritize JSON serializable outputs over plane texts.
    def dummy_func(message: str, test1: str, test2: list[str]) -> str:
       return f"""{message}: {test1}, {", ".join(test2)}"""
 
-
-   agent = vhq.Agent(role="demo", goal="amazing project goal")
-
    task = vhq.Task(
       description="Amazing task",
       pydantic_output=CustomOutput,
@@ -96,7 +159,7 @@ By default, the agent prioritize JSON serializable outputs over plane texts.
       callback_kwargs=dict(message="Hi! Here is the result: ")
    )
 
-   res = task.execute_sync(agent=agent, context="amazing context to consider.")
+   res = task.execute(context="amazing context to consider.")
    print(res)
    ```
 
