@@ -18,23 +18,23 @@ Agentic orchestration framework to deploy agent network and handle complex task 
 - [PyPI](https://pypi.org/project/versionhq/)
 - [Playground](https://versi0n.io/)
 
-
 <hr />
 
 ## Key Features
 
-`versionhq` is a Python framework that can generate agent networks for complex task automation without human interaction.
+`versionhq` is a Python framework for agent networks that handle complex task automation without human interaction.
 
 Agents are model-agnostic, and will improve task output, while oprimizing token cost and job latency, by sharing their memory, knowledge base, and RAG tools with other agents in the network.
 
 
-###  Agent formation
+###  Agent Network
 
 Agents adapt their formation based on task complexity.
 
 You can specify a desired formation or allow the agents to determine it autonomously (default).
 
-|  | **Solo Agent** | **Supervising** | **Network** | **Random** |
+
+|  | **Solo Agent** | **Supervising** | **Squad** | **Random** |
 | :--- | :--- | :--- | :--- | :--- |
 | **Formation** | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/rbgxttfoeqqis1ettlfz.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/zhungor3elxzer5dum10.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/dnusl7iy7kiwkxwlpmg8.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/sndpczatfzbrosxz9ama.png" alt="solo" width="200"> |
 | **Usage** | <ul><li>A single agent with tools, knowledge, and memory.</li><li>When self-learning mode is on - it will turn into **Random** formation.</li></ul> | <ul><li>Leader agent gives directions, while sharing its knowledge and memory.</li><li>Subordinates can be solo agents or networks.</li></ul> | <ul><li>Share tasks, knowledge, and memory among network members.</li></ul> | <ul><li>A single agent handles tasks, asking help from other agents without sharing its memory or knowledge.</li></ul> |
@@ -80,7 +80,19 @@ task_graph.visualize()
 
 <hr />
 
-### Agent optimization
+### Task Graph
+
+A `TaskGraph` represents tasks as `nodes` and their execution dependencies as `edges`, automating rule-based execution.
+
+`Agent Networks` can handle `TaskGraph` objects by optimizing their formations.
+
+The following example demonstrates a simple concept of a `supervising` agent network handling a task graph with three tasks and one critical edge.
+
+<img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1739337639/pj_m_home/zfg4ccw1m1ww1tpnb0pa.png">
+
+<hr />
+
+### Optimization
 
 Agents are model-agnostic and can handle multiple tasks, leveraging their own and their peers' knowledge sources, memories, and tools.
 
@@ -113,25 +125,25 @@ agent.update(
 
 ### Package installation
 
-   ```
-   pip install versionhq
-   ```
+```
+pip install versionhq
+```
 
 (Python 3.11 / 3.12)
 
 ### Forming a agent network
 
-   ```python
-   import versionhq as vhq
+```python
+import versionhq as vhq
 
-   network = vhq.form_agent_network(
-      task="YOUR AMAZING TASK OVERVIEW",
-      expected_outcome="YOUR OUTCOME EXPECTATION",
-   )
-   res = network.launch()
-   ```
+network = vhq.form_agent_network(
+   task="YOUR AMAZING TASK OVERVIEW",
+   expected_outcome="YOUR OUTCOME EXPECTATION",
+)
+res = network.launch()
+```
 
-   This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, Pydantic model format with evaluation.
+This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, Pydantic model format with evaluation.
 
 
 ### Executing tasks
@@ -141,78 +153,83 @@ You can simply build an agent using `Agent` model and execute the task using `Ta
 By default, agents prioritize JSON over plane text outputs.
 
 
-   ```python
-   import versionhq as vhq
-   from pydantic import BaseModel
+```python
+import versionhq as vhq
+from pydantic import BaseModel
 
-   class CustomOutput(BaseModel):
-      test1: str
-      test2: list[str]
+class CustomOutput(BaseModel):
+   test1: str
+   test2: list[str]
 
-   def dummy_func(message: str, test1: str, test2: list[str]) -> str:
-      return f"""{message}: {test1}, {", ".join(test2)}"""
+def dummy_func(message: str, test1: str, test2: list[str]) -> str:
+   return f"""{message}: {test1}, {", ".join(test2)}"""
 
-   task = vhq.Task(
-      description="Amazing task",
-      pydantic_output=CustomOutput,
-      callback=dummy_func,
-      callback_kwargs=dict(message="Hi! Here is the result: ")
-   )
+task = vhq.Task(
+   description="Amazing task",
+   pydantic_output=CustomOutput,
+   callback=dummy_func,
+   callback_kwargs=dict(message="Hi! Here is the result: ")
+)
 
-   res = task.execute(context="amazing context to consider.")
-   print(res)
-   ```
+res = task.execute(context="amazing context to consider.")
+print(res)
+```
 
 
 This will return a `TaskOutput` object that stores response in plane text, JSON, and Pydantic model: `CustomOutput` formats with a callback result, tool output (if given), and evaluation results (if given).
 
-   ```python
-   res == TaskOutput(
-      task_id=UUID('<TASK UUID>'),
-      raw='{\"test1\":\"random str\", \"test2\":[\"str item 1\", \"str item 2\", \"str item 3\"]}',
-      json_dict={'test1': 'random str', 'test2': ['str item 1', 'str item 2', 'str item 3']},
-      pydantic=<class '__main__.CustomOutput'>,
-      tool_output=None,
-      callback_output='Hi! Here is the result: random str, str item 1, str item 2, str item 3', # returned a plain text summary
-      evaluation=None
-   )
-   ```
+```python
+res == TaskOutput(
+   task_id=UUID('<TASK UUID>'),
+   raw='{\"test1\":\"random str\", \"test2\":[\"str item 1\", \"str item 2\", \"str item 3\"]}',
+   json_dict={'test1': 'random str', 'test2': ['str item 1', 'str item 2', 'str item 3']},
+   pydantic=<class '__main__.CustomOutput'>,
+   tool_output=None,
+   callback_output='Hi! Here is the result: random str, str item 1, str item 2, str item 3', # returned a plain text summary
+   evaluation=None
+)
+```
 
 ### Supervising
 
-   ```python
-   import versionhq as vhq
+To create an agent network with one or more manager agents, designate members using the `is_manager` tag.
 
-   agent_a = vhq.Agent(role="agent a", goal="My amazing goals", llm="llm-of-your-choice")
-   agent_b = vhq.Agent(role="agent b", goal="My amazing goals", llm="llm-of-your-choice")
+```python
+import versionhq as vhq
 
-   task_1 = vhq.Task(
-      description="Analyze the client's business model.",
-      response_fields=[vhq.ResponseField(title="test1", data_type=str, required=True),],
-      allow_delegation=True
-   )
+agent_a = vhq.Agent(role="agent a", goal="My amazing goals", llm="llm-of-your-choice")
+agent_b = vhq.Agent(role="agent b", goal="My amazing goals", llm="llm-of-your-choice")
 
-    task_2 = vhq.Task(
-      description="Define the cohort.",
-      response_fields=[ResponseField(title="test1", data_type=int, required=True),],
-      allow_delegation=False
-   )
+task_1 = vhq.Task(
+   description="Analyze the client's business model.",
+   response_fields=[vhq.ResponseField(title="test1", data_type=str, required=True),],
+   allow_delegation=True
+)
 
-   team = vhq.Team(
-      members=[
-         vhq.Member(agent=agent_a, is_manager=False, task=task_1),
-         vhq.Member(agent=agent_b, is_manager=True, task=task_2),
-      ],
-   )
-   res = team.launch()
-   ```
+task_2 = vhq.Task(
+   description="Define a cohort.",
+   response_fields=[vhq.ResponseField(title="test1", data_type=int, required=True),],
+   allow_delegation=False
+)
+
+network =vhq.AgentNetwork(
+   members=[
+      vhq.Member(agent=agent_a, is_manager=False, tasks=[task_1]),
+      vhq.Member(agent=agent_b, is_manager=True, tasks=[task_2]), # Agent B as a manager
+   ],
+)
+res = network.launch()
+
+assert isinstance(res, vhq.NetworkOutput)
+assert not [item for item in task_1.processed_agents if "vhq-Delegated-Agent" == item]
+assert [item for item in task_1.processed_agents if "agent b" == item]
+```
 
 This will return a list with dictionaries with keys defined in the `ResponseField` of each task.
 
-Tasks can be delegated to a team manager, peers in the team, or completely new agent.
+Tasks can be delegated to a manager, peers within the agent network, or a completely new agent.
 
 <hr />
-
 
 ## Repository Structure
 
