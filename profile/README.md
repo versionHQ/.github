@@ -16,7 +16,7 @@ Agentic orchestration framework to deploy agent network and handle complex task 
 - [Github](https://github.com/versionHQ/multi-agent-system)
 - [Docs](https://docs.versi0n.io)
 - [PyPI](https://pypi.org/project/versionhq/)
-- [Playground](https://versi0n.io/)
+- [Playground](https://versi0n.io/playground)
 
 <hr />
 
