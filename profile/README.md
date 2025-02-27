@@ -1,22 +1,21 @@
-# version HQ
+# Overview
 
-[![DL](https://img.shields.io/badge/Download-15K+-red)](https://clickpy.clickhouse.com/dashboard/versionhq)
+[![DL](https://img.shields.io/badge/Download-20K+-red)](https://clickpy.clickhouse.com/dashboard/versionhq)
 ![MIT license](https://img.shields.io/badge/License-MIT-green)
 [![Publisher](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml/badge.svg)](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml)
-![PyPI](https://img.shields.io/badge/PyPI-v1.1.12+-blue)
-![python ver](https://img.shields.io/badge/Python-3.11+-purple)
+![PyPI](https://img.shields.io/badge/PyPI-v1.2.2+-blue)
+![python ver](https://img.shields.io/badge/Python-3.11/3.12-purple)
 ![pyenv ver](https://img.shields.io/badge/pyenv-2.5.0-orange)
-![node](https://img.shields.io/badge/node-22.0-darkblue)
 
 
-Agentic orchestration framework to deploy agent network and handle complex task automation.
+Agentic orchestration framework for multi-agent networks and task graphs for complex task automation.
 
 **Visit:**
 
-- [Github](https://github.com/versionHQ/multi-agent-system)
+- [Playground](https://versi0n.io/)
 - [Docs](https://docs.versi0n.io)
-- [PyPI](https://pypi.org/project/versionhq/)
-- [Playground](https://versi0n.io/playground)
+- [Github](https://github.com/versionHQ/)
+- [Python SDK](https://pypi.org/project/versionhq/)
 
 <hr />
 
@@ -24,12 +23,12 @@ Agentic orchestration framework to deploy agent network and handle complex task 
 
 `versionhq` is a Python framework for agent networks that handle complex task automation without human interaction.
 
-Agents are model-agnostic, and will improve task output, while oprimizing token cost and job latency, by sharing their memory, knowledge base, and RAG tools with other agents in the network.
+Model agnostic agents will handle tasks while collaborating with the members in the network by sharing memories, tools, and knowledge sources.
 
 
-###  Agent Network
+###  Multi-Agent Network
 
-Agents adapt their formation based on task complexity.
+Agents adapt their formation based on task complexity. 
 
 You can specify a desired formation or allow the agents to determine it autonomously (default).
 
@@ -92,35 +91,6 @@ The following example demonstrates a simple concept of a `supervising` agent net
 
 <hr />
 
-### Optimization
-
-Agents are model-agnostic and can handle multiple tasks, leveraging their own and their peers' knowledge sources, memories, and tools.
-
-Agents are optimized during network formation, but customization is possible before or after.
-
-The following code snippet demonstrates agent customization:
-
-```python
-import versionhq as vhq
-
-agent = vhq.Agent(
-   role="Marketing Analyst",
-   goal="my amazing goal"
-) # assuming this agent was created during the network formation
-
-# update the agent
-agent.update(
-   llm="gemini-2.0", # updating LLM (Valid llm_config will be inherited to the new LLM.)
-   tools=[vhq.Tool(func=lambda x: x)], # adding tools
-   max_rpm=3,
-   knowledge_sources=["<KC1>", "<KS2>"], # adding knowledge sources. This will trigger the storage creation.
-   memory_config={"user_id": "0001"}, # adding memories
-   dummy="I am dummy" # <- invalid field will be automatically ignored
-)
-```
-
-<hr />
-
 ## Quick Start
 
 ### Package installation
@@ -131,27 +101,39 @@ pip install versionhq
 
 (Python 3.11 / 3.12)
 
-### Forming a agent network
+
+### Launching an agent
+
+
+```python
+import versionhq as vhq
+
+agent = vhq.Agent(role="Marketer")
+res = agent.start()
+
+assert isinstance(res, vhq.TaskOutput) # contains agent's response in text, JSON, Pydantic formats with usage recordes and eval scores.
+```
+
+
+### Automating workflows
 
 ```python
 import versionhq as vhq
 
 network = vhq.form_agent_network(
-   task="YOUR AMAZING TASK OVERVIEW",
-   expected_outcome="YOUR OUTCOME EXPECTATION",
+   task="draft a promo plan",
+   expected_outcome="marketing plan, budget, KPI targets",
 )
-res = network.launch()
+res, tg = network.launch()
+
+assert isinstance(res, vhq.TaskOutput) # the latest output from the workflow
+assert isinstance(tg, vhq.TaskGraph) # contains task nodes and edges that connect the nodes with dep-met conditions
 ```
 
-This will form a network with multiple agents on `Formation` and return `TaskOutput` object with output in JSON, plane text, Pydantic model format with evaluation.
 
+### Executing a single task
 
-### Executing tasks
-
-You can simply build an agent using `Agent` model and execute the task using `Task` class.
-
-By default, agents prioritize JSON over plane text outputs.
-
+You can simply build and execute a task using `Task` class.
 
 ```python
 import versionhq as vhq
@@ -171,34 +153,20 @@ task = vhq.Task(
    callback_kwargs=dict(message="Hi! Here is the result: ")
 )
 
-res = task.execute(context="amazing context to consider.")
-print(res)
+res = task.execute(context="testing a task function")
+assert isinstance(res, vhq.TaskOutput)
 ```
 
 
-This will return a `TaskOutput` object that stores response in plane text, JSON, and Pydantic model: `CustomOutput` formats with a callback result, tool output (if given), and evaluation results (if given).
-
-```python
-res == TaskOutput(
-   task_id=UUID('<TASK UUID>'),
-   raw='{\"test1\":\"random str\", \"test2\":[\"str item 1\", \"str item 2\", \"str item 3\"]}',
-   json_dict={'test1': 'random str', 'test2': ['str item 1', 'str item 2', 'str item 3']},
-   pydantic=<class '__main__.CustomOutput'>,
-   tool_output=None,
-   callback_output='Hi! Here is the result: random str, str item 1, str item 2, str item 3', # returned a plain text summary
-   evaluation=None
-)
-```
-
-### Supervising
+### Supervising agents
 
 To create an agent network with one or more manager agents, designate members using the `is_manager` tag.
 
 ```python
 import versionhq as vhq
 
-agent_a = vhq.Agent(role="agent a", goal="My amazing goals", llm="llm-of-your-choice")
-agent_b = vhq.Agent(role="agent b", goal="My amazing goals", llm="llm-of-your-choice")
+agent_a = vhq.Agent(role="Member", llm="gpt-4o")
+agent_b = vhq.Agent(role="Leader", llm="gemini-2.0")
 
 task_1 = vhq.Task(
    description="Analyze the client's business model.",
@@ -218,7 +186,7 @@ network =vhq.AgentNetwork(
       vhq.Member(agent=agent_b, is_manager=True, tasks=[task_2]), # Agent B as a manager
    ],
 )
-res = network.launch()
+res, tg = network.launch()
 
 assert isinstance(res, vhq.NetworkOutput)
 assert not [item for item in task_1.processed_agents if "vhq-Delegated-Agent" == item]
