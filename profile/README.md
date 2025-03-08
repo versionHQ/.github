@@ -1,19 +1,19 @@
 # Overview
 
-[![DL](https://img.shields.io/badge/Download-20K+-red)](https://clickpy.clickhouse.com/dashboard/versionhq)
+[![DL](https://img.shields.io/badge/Download-30K+-red)](https://clickpy.clickhouse.com/dashboard/versionhq)
 ![MIT license](https://img.shields.io/badge/License-MIT-green)
 [![Publisher](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml/badge.svg)](https://github.com/versionHQ/multi-agent-system/actions/workflows/publish.yml)
-![PyPI](https://img.shields.io/badge/PyPI-v1.2.2+-blue)
-![python ver](https://img.shields.io/badge/Python-3.11/3.12-purple)
+![PyPI](https://img.shields.io/badge/PythonSDK-v1.2.4+-blue)
+![python ver](https://img.shields.io/badge/Python-3.11|3.12|3.13-purple)
 ![pyenv ver](https://img.shields.io/badge/pyenv-2.5.0-orange)
 
 
-Agentic orchestration framework for multi-agent networks and task graphs for complex task automation.
+A Python framework for autonomous agent networks that handle task automation with multi-step reasoning.
 
 **Visit:**
 
 - [Playground](https://versi0n.io/)
-- [Docs](https://docs.versi0n.io)
+- [Documentation](https://docs.versi0n.io)
 - [Github](https://github.com/versionHQ/)
 - [Python SDK](https://pypi.org/project/versionhq/)
 
@@ -21,23 +21,23 @@ Agentic orchestration framework for multi-agent networks and task graphs for com
 
 ## Key Features
 
-`versionhq` is a Python framework for agent networks that handle complex task automation without human interaction.
+`versionhq` is a Python framework designed for automating complex, multi-step tasks using autonomous agent networks.
 
-Model agnostic agents will handle tasks while collaborating with the members in the network by sharing memories, tools, and knowledge sources.
+Users can either configure their agents and network manually or allow the system to automatically manage the process based on provided task goals.
 
 
-###  Multi-Agent Network
+###  Agent Network
 
-Agents adapt their formation based on task complexity. 
+Agents adapt their formation based on task complexity.
 
 You can specify a desired formation or allow the agents to determine it autonomously (default).
 
 
-|  | **Solo Agent** | **Supervising** | **Squad** | **Random** |
-| :--- | :--- | :--- | :--- | :--- |
-| **Formation** | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/rbgxttfoeqqis1ettlfz.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/zhungor3elxzer5dum10.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/dnusl7iy7kiwkxwlpmg8.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/sndpczatfzbrosxz9ama.png" alt="solo" width="200"> |
-| **Usage** | <ul><li>A single agent with tools, knowledge, and memory.</li><li>When self-learning mode is on - it will turn into **Random** formation.</li></ul> | <ul><li>Leader agent gives directions, while sharing its knowledge and memory.</li><li>Subordinates can be solo agents or networks.</li></ul> | <ul><li>Share tasks, knowledge, and memory among network members.</li></ul> | <ul><li>A single agent handles tasks, asking help from other agents without sharing its memory or knowledge.</li></ul> |
-| **Use case** | An email agent drafts promo message for the given audience. | The leader agent strategizes an outbound campaign plan and assigns components such as media mix or message creation to subordinate agents. | An email agent and social media agent share the product knowledge and deploy multi-channel outbound campaign. | 1. An email agent drafts promo message for the given audience, asking insights on tones from other email agents which oversee other clusters. 2. An agent calls the external agent to deploy the campaign. |
+|                 | **Solo Agent**  | **Supervising**  | **Squad**         | **Random**      |
+| :---            | :---            | :---             | :---              | :---            |
+| **Formation**   | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/rbgxttfoeqqis1ettlfz.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/zhungor3elxzer5dum10.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/dnusl7iy7kiwkxwlpmg8.png" alt="solo" width="200"> | <img src="https://res.cloudinary.com/dfeirxlea/image/upload/v1738818211/pj_m_agents/sndpczatfzbrosxz9ama.png" alt="solo" width="200"> |
+| **Usage**       | <ul><li>A single agent with tools, knowledge, and memory.</li><li>When self-learning mode is on - it will turn into **Random** formation.</li></ul> | <ul><li>Leader agent gives directions, while sharing its knowledge and memory.</li><li>Subordinates can be solo agents or networks.</li></ul> | <ul><li>Share tasks, knowledge, and memory among network members.</li></ul> | <ul><li>A single agent handles tasks, asking help from other agents without sharing its memory or knowledge.</li></ul> |
+| **Use case**    | An email agent drafts promo message for the given audience. | The leader agent strategizes an outbound campaign plan and assigns components such as media mix or message creation to subordinate agents. | An email agent and social media agent share the product knowledge and deploy multi-channel outbound campaign. | 1. An email agent drafts promo message for the given audience, asking insights on tones from other email agents which oversee other clusters. 2. An agent calls the external agent to deploy the campaign. |
 
 <hr />
 
